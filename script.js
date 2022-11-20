@@ -2,6 +2,7 @@ let i = 0;
 let count = 0;
 const maxSpeed = 7;
 const speed = 0.1;
+const brake = 0.3;
 document.querySelector(`.green`).classList.add(`active`);
 setInterval( e =>{
     i = i + 1;
@@ -27,9 +28,6 @@ setInterval( e =>{
         document.querySelector(`.red`).classList.add(`active`);
     }
 },1000)
-document.onkeydown = checkKey;
-
-
 
 class Car{
     constructor(car,x,y,angle,speed){
@@ -62,6 +60,27 @@ class Car{
     accelarate(v){
 		this.speed = Math.min(Math.max(this.speed + v, -maxSpeed), maxSpeed);
 	}
+
+    brake(){
+        if(this.speed < 0){
+            this.accelarate(brake);
+        }
+        else if(this.speed > 0){
+            this.speed = 0;
+        }
+    }
+
+    slow(){
+        setInterval(e =>{
+            if(this.speed < 0){
+                this.speed += 0.05;
+            }
+            else if(this.speed >= 0){
+                this.speed == 0;
+            }
+        },100)
+    }
+
 }
 
 let car = new Car(document.querySelector(`.car`),50,50,-90,0);
@@ -71,7 +90,7 @@ setInterval(() =>{
     car.forward();
 })
 
-function checkKey(e){
+document.addEventListener("keydown", e => {
     e = e || window.event;
 
     if(e.keyCode == `38`){
@@ -90,5 +109,9 @@ function checkKey(e){
     else if(e.keyCode == `39`){
         car.rotaten();
     }
-}
+    else if(e.keyCode == `32`){
+        car.brake();
+    }
+});
 
+car.slow();

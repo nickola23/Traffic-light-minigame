@@ -55,8 +55,8 @@ main{
     top: 0;
     left: 0;
     position: absolute;
-    width: 200px;
-    height: 100px;
+    width: 100px;
+    height: 50px;
     background-image: url(./img/car1.png);
     background-position: center;
     background-size: cover;
