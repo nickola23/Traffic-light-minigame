@@ -1,0 +1,69 @@
+main{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.count{
+    font-size: 30px;
+    margin-top: 15px;
+    min-width: 70px;
+}
+.lights{
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    width: 300px;
+    background-color: black;
+    border-radius: 20px;
+    z-index: 99;
+}
+.red, .yellow, .green{
+    border-radius: 50%;
+    opacity: 0.4;
+    height: 60px;
+    width: 60px;
+}
+.red{
+    top: 5%;
+    background-color: rgb(255, 61, 61);
+}
+.active.red{
+    box-shadow: red 0px 0px 40px 3px;
+}
+.yellow{
+    top: 36%;
+    background-color: rgb(233, 247, 47);
+}
+.active.yellow{
+    box-shadow: yellow 0px 0px 40px 3px;
+}
+.green{
+    top: 68%;
+    background-color: rgb(12, 250, 12);
+}.active.green{
+    box-shadow: green 0px 0px 40px 3px;
+}
+.active{
+    opacity: 1;
+}
+.blinking{
+    animation: blink 1s infinite;
+}
+.car{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    background-image: url(./img/car1.png);
+    background-position: center;
+    background-size: cover;
+    transform-origin: 0px 0px 50px 50px;
+}
+@keyframes blink {
+    20% {
+        opacity: 0.2;
+    }
+}
