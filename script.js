@@ -1,8 +1,9 @@
-let i = 0;
-let count = 0;
 const maxSpeed = 7;
 const speed = 0.1;
 const brake = 0.3;
+let i = 0;
+let count = 0;
+let arrowUpPressed, arrowDownPressed = false;
 document.querySelector(`.green`).classList.add(`active`);
 setInterval( e =>{
     i = i + 1;
@@ -94,14 +95,10 @@ document.addEventListener("keydown", e => {
     e = e || window.event;
 
     if(e.keyCode == `38`){
-        car.accelarate(-speed);
-        setInterval( e =>{
-            document.querySelector(`.count`).innerHTML = i;
-            i = i + 1;
-        },70);
+        arrowUpPressed = true;
     }
     else if(e.keyCode == `40`){
-        car.accelarate(speed);
+        arrowDownPressed = true;
     }
     else if(e.keyCode == `37`){
         car.rotatep();
@@ -112,6 +109,27 @@ document.addEventListener("keydown", e => {
     else if(e.keyCode == `32`){
         car.brake();
     }
+    if(arrowUpPressed == true){
+        car.accelarate(-speed);
+        setInterval( e =>{
+            document.querySelector(`.count`).innerHTML = i;
+            i = i + 1;
+        },70);
+    }
+    else if(arrowDownPressed == true){
+        car.accelarate(speed);
+    }
 });
 
+document.addEventListener("keyup", e =>{
+    if(e.keyCode == `38`){
+        arrowUpPressed = false;
+    }
+    else if(e.keyCode == `40`){
+        arrowDownPressed = false;
+    }
+})
+
 car.slow();
+
+
