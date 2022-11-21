@@ -1,14 +1,11 @@
+*{
+    overflow: hidden;
+}
 main{
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
     display: flex;
     justify-content: space-around;
-}
-.count{
-    font-size: 30px;
-    margin-top: 15px;
-    min-width: 70px;
 }
 .lights{
     display: flex;
@@ -19,6 +16,7 @@ main{
     width: 300px;
     background-color: black;
     border-radius: 20px;
+    margin-top: 15px;
     z-index: 99;
 }
 .red, .yellow, .green{
@@ -62,8 +60,32 @@ main{
     background-size: cover;
     transform-origin: 0px 0px 50px 25px;
 }
+.counter{
+    font-size: 30px;
+    margin-top: 30px;
+    min-width: 70px;
+    text-align: right;
+}
+.penalty{
+    color: red;
+    animation: toTop 1s infinite;
+}
 @keyframes blink {
     20% {
         opacity: 0.2;
+    }
+}
+@keyframes toTop {
+    0% {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-50%);
+        opacity: 0;
     }
 }

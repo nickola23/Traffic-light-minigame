@@ -1,34 +1,45 @@
 const maxSpeed = 7;
 const speed = 0.1;
 const brake = 0.3;
+let j = 0;
 let i = 0;
+let k = 0;
 let count = 0;
 let arrowUpPressed, arrowDownPressed = false;
 document.querySelector(`.green`).classList.add(`active`);
 setInterval( e =>{
-    i = i + 1;
-    if(i % 9 == 0){
+    j = j + 1;
+    if(j % 9 == 0){
         document.querySelector(`.green`).classList.remove(`active`);
         document.querySelector(`.yellow`).classList.add(`active`);
+        car.penalty();
+        k = 0;
     }
-    else if((i - 1) % 9 == 0){
+    else if((j - 1) % 9 == 0){
         document.querySelector(`.yellow`).classList.remove(`active`);
         document.querySelector(`.red`).classList.remove(`active`);
         document.querySelector(`.green`).classList.add(`active`);
     }
-    else if((i - 3) % 9 == 0){
+    else if((j - 3) % 9 == 0){
         document.querySelector(`.green`).classList.add(`blinking`);
     }
-    else if((i - 6) % 9 == 0){
+    else if((j - 6) % 9 == 0){
         document.querySelector(`.green`).classList.remove(`active`);
         document.querySelector(`.green`).classList.remove(`blinking`);
         document.querySelector(`.yellow`).classList.add(`active`);
     }
-    else if((i - 7) % 9 == 0){
+    else if((j - 7) % 9 == 0){
         document.querySelector(`.yellow`).classList.remove(`active`);
         document.querySelector(`.red`).classList.add(`active`);
+        car.penalty();
+        k = 0;
     }
 },1000)
+
+setInterval( e =>{
+    document.querySelector(`.count`).innerHTML = i;
+    i = i + 1;
+},10);
 
 class Car{
     constructor(car,x,y,angle,speed){
@@ -40,14 +51,17 @@ class Car{
     }
 
     display(){
+
         this.car.style.transform = `rotate(${this.angle}deg)`;
         this.car.style.top = `${this.x}px`;
         this.car.style.left = `${this.y}px`;
     }
 
     forward(){
-        this.x += this.speed * parseFloat(Math.sin((this.angle)*(Math.PI/180)));
-        this.y += this.speed * parseFloat(Math.cos((this.angle)*(Math.PI/180)));
+        const dx = this.speed * parseFloat(Math.sin((this.angle)*(Math.PI/180)));
+        const dy = this.speed * parseFloat(Math.cos((this.angle)*(Math.PI/180)));
+        this.x = Math.max(Math.min(this.x + dx, window.innerHeight - this.car.clientHeight - 20), 20);
+		this.y = Math.max(Math.min(this.y + dy, window.innerWidth - this.car.clientWidth), 0);
     }
 
     rotatep(){
@@ -82,6 +96,17 @@ class Car{
         },100)
     }
 
+    penalty(){
+        if(this.speed != 0 && k == 0){
+            i -= 500;
+            k ++;
+            document.querySelector(`.penalty`).innerHTML = `-500`;
+            setTimeout(e =>{
+                document.querySelector(`.penalty`).innerHTML = ``;
+            },1000);
+        }
+    }
+
 }
 
 let car = new Car(document.querySelector(`.car`),50,50,-90,0);
@@ -111,10 +136,6 @@ document.addEventListener("keydown", e => {
     }
     if(arrowUpPressed == true){
         car.accelarate(-speed);
-        setInterval( e =>{
-            document.querySelector(`.count`).innerHTML = i;
-            i = i + 1;
-        },70);
     }
     else if(arrowDownPressed == true){
         car.accelarate(speed);
